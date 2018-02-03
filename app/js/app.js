@@ -3,6 +3,7 @@ var busboy = require('connect-busboy'); //middleware for form/file upload
 var path = require('path');     //used for file path
 var fs = require('fs-extra');       //File System - for file manipulation
 var utils = require('utils');
+var settings = require('settings');
 const app = express()
 app.use(busboy());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -25,7 +26,6 @@ app.post('/authorize/qrcode', function (req, res) {
 		var token = UsersAgent().storeTokenForUser(username,qrcode)
 			res.send({status: 'success', token:token, agent:''})
 	}
-
 });
 /***
  * Expecting params:
@@ -79,4 +79,4 @@ app.post('/transfer/file', function (req, res) {
 	});
 });
 
-app.listen(3000, '0.0.0.0');
+app.listen(settings.getPort(), '0.0.0.0');

@@ -25,10 +25,6 @@ function UsersAgent() {
 	};
 }
 function User(username){
-
-	this.saveFile = function(fileMetadata){
-
-	}
 	/**
 	 *
 	 * @param metdadata instance returned by the function utils.getMetadataForFile(...)
