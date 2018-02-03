@@ -1,0 +1,13 @@
+body { padding-top: 0px; }
+.logo{
+    height: 34px;
+}
+
+#qrcodeCanvas{
+    width:400px;
+    height:400px;
+}
+#qrcodeCanvas canvas {
+    width: 100%;
+    height: 100%;
+}

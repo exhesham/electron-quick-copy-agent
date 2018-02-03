@@ -1,0 +1,11 @@
+{
+  "name": "ElectronDataAgent",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.16.2",
+    "http": "0.0.0",
+    "node-smb-server": "^0.10.33",
+    "qrcode": "^1.2.0"
+  },
+  "main": "main.js"
+}
