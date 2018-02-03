@@ -21,5 +21,13 @@ resource, this feature will come in later versions.
 
 ![Design](./design.png "Database model")
 
+#### Scan & Authentication
+
+See README of app
+
+
+
+Refer to the readme of the Mobile App
+
 
 

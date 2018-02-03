@@ -12,6 +12,22 @@ app.get('/', function (req, res) {
 });
 
 /***
+ * the scanned QRCode will be sent to this call
+ * @username
+ * @qrcode
+ */
+app.post('/authorize/qrcode', function (req, res) {
+	var qrcode= req.param('qrcode');
+	var username = req.param('username');
+	if(!username || !utils.isQrCodeCorrect(qrcode)){
+		res.send({status: 'fail', msg:'qr code is not correct or empty username!'});
+	}else{
+		var token = UsersAgent().storeTokenForUser(username,qrcode)
+			res.send({status: 'success', token:token, agent:''})
+	}
+
+});
+/***
  * Expecting params:
  * @text: the text to save.
  * @token

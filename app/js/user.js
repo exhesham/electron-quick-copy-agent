@@ -3,7 +3,7 @@ function UsersAgent() {
 		isExist:isExist,
 		isValidToken:isValidToken,
 		getUserByToken:getUserByToken,
-		generateTokenForUser:generateTokenForUser,
+		storeTokenForUser:storeTokenForUser,
 
 	}
 	function isExist(username){
@@ -16,11 +16,11 @@ function UsersAgent() {
 		return false;
 	};
 	/***
-	 * will generate a token for the user so the user will send it for each file/text/folder transfer
+	 * will parse the generated qr code and store it.
 	 * @param user: instance of User
 	 * @returns a token string
 	 */
-	function generateTokenForUser(user){
+	function storeTokenForUser(user){
 		return 'sha256 for the user';
 	};
 }
