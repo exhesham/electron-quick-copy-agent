@@ -1,6 +1,7 @@
 // index.js -> bundle.js
-var QRCode = require('qrcode')
-var utils = require('utils')
+var QRCode = require('qrcode');
+var path = require('path');
+var utils = require( path.resolve( __dirname,"js", "utils.js" ) );
 function generate() {
 	var token = utils.generateToken();
 	var canvas = document.getElementById('qrcodec')
@@ -11,4 +12,3 @@ function generate() {
 }
 
 generate();
-exports.generateQR = generate;

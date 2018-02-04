@@ -6,7 +6,8 @@
  * @param user the record of the user. this json contains the settings metadata
  * @returns {{filename: *, originalName: string, originalFullName: string, distName: string, receivedAsFolder: *, date: string}}
  */
-var settings = require('settings');
+var path = require('path');
+var settings = require( path.resolve( __dirname, "settings.js" ) );
 function getMetadataForFile(filename, receivedAsFolder, user){
 	//TODO:Take the settings from the user and check if can create file with this name
 	return{	filename:filename,
