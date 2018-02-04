@@ -2,6 +2,7 @@
 * Responsible for managing the app settings.
 * */
 var settings = {
+	'protocol':'https://',
 	'folder':'./',
 	'version':'v1.8.2.1',   // 1.8 is the year 2 is the month and 1 is the serial num
 	'port': 3000,
@@ -29,6 +30,9 @@ module.exports.getAgentID = function () {
 }
 module.exports.databaseDir = function () {
 	return settings['database-dir'];
+}
+module.exports.getProtocol = function() {
+	return settings['protocol'];
 }
 module.exports.getVersion = function() {
 	return settings['version'];

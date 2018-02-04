@@ -7,6 +7,8 @@
  * @returns {{filename: *, originalName: string, originalFullName: string, distName: string, receivedAsFolder: *, date: string}}
  */
 var path = require('path');
+var myip = require('quick-local-ip');
+var os = require('os');
 var settings = require( path.resolve( __dirname, "settings.js" ) );
 function getMetadataForFile(filename, receivedAsFolder, user){
 	//TODO:Take the settings from the user and check if can create file with this name
@@ -45,10 +47,36 @@ function Base64Decode(str) {
  * for example: 3000@
  */
 function generateToken() {
-	return settings.getPort() + '@' + randomStriing(settings.getTokenLength())
+	return settings.getProtocol() +utils.getIP() + ':' + settings.getPort() + '@' + randomStriing(settings.getTokenLength())
 }
 
+function getIP() {
+	return myip.getLocalIP4();
+	// var ifaces = os.networkInterfaces();
+	//
+	// Object.keys(ifaces).forEach(function (ifname) {
+	// 	var alias = 0;
+	//
+	// 	ifaces[ifname].forEach(function (iface) {
+	// 		if ('IPv4' !== iface.family || iface.internal !== false) {
+	// 			// skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+	// 			return;
+	// 		}
+	//
+	// 		if (alias >= 1) {
+	// 			// this single interface has multiple ipv4 addresses
+	// 			console.log(ifname + ':' + alias, iface.address);
+	// 		} else {
+	// 			// this interface has only one ipv4 adress
+	// 			console.log(ifname, iface.address);
+	// 			cb(iface.address)
+	// 		}
+	// 		++alias;
+	// 	});
+	// });
+}
 exports.getMetadataForFile = getMetadataForFile;
 exports.generateToken = generateToken;
 exports.Base64Decode = Base64Decode;
-exports.Base64Encode = Base64Encode;
+exports.Base64Decode = Base64Decode;
+exports.getIP = getIP;
