@@ -23,8 +23,12 @@ app.post('/authorize/qrcode', function (req, res) {
 	if(!username || !utils.isQrCodeCorrect(qrcode)){
 		res.send({status: 'fail', msg:'qr code is not correct or empty username!'});
 	}else{
-		var token = UsersAgent().storeTokenForUser(username,qrcode)
-			res.send({status: 'success', token:token, agent:''})
+		var token = UsersAgent().storeTokenForUser(username, qrcode);
+		/*
+		the scanned token by the user will not be the same as the returned one as the captured one may be stolen or captured by a second party
+		so in order for it not to be used by the attacker as impersonation, another random one will be created and posted back to the user.
+		 */
+		res.send({status: 'success', token:token, agent:settings.getAgentID()});
 	}
 });
 /***

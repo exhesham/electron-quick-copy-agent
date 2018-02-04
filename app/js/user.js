@@ -1,3 +1,6 @@
+var db = require('database');
+var utils = require('utils');
+
 function UsersAgent() {
 	return {
 		isExist:isExist,
@@ -16,12 +19,16 @@ function UsersAgent() {
 		return false;
 	};
 	/***
-	 * will parse the generated qr code and store it.
+	 * will store the token - and return a new generated one that the user will be identified with it.
 	 * @param user: instance of User
-	 * @returns a token string
+	 * @returns a new generated token string that will be used in the future.
 	 */
-	function storeTokenForUser(user){
-		return 'sha256 for the user';
+	function storeTokenForUser(user,token){
+		var userDbName = db.getUserDBName(user);
+		// generate the new token
+		var newToken = utils.generateToken();
+		new db.Database(userDbName).storeRecord({'user':user,'original-token': token, 'token':newToken, 'version': utils.getVersion()});
+		return newToken;
 	};
 }
 function User(username){

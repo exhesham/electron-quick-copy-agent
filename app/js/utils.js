@@ -49,3 +49,5 @@ function generateToken() {
 
 exports.getMetadataForFile = getMetadataForFile;
 exports.generateToken = generateToken;
+exports.Base64Decode = Base64Decode;
+exports.Base64Encode = Base64Encode;

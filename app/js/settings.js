@@ -3,8 +3,10 @@
 * */
 var settings = {
 	'folder':'./',
+	'version':'v1.8.2.1',   // 1.8 is the year 2 is the month and 1 is the serial num
 	'port': 3000,
 	'token-length': 32,
+	'database-dir': './',
 	'default-agent-id': 'exhesham.com'
 }
 
@@ -24,4 +26,10 @@ module.exports.getAgentID = function () {
 	catch (e) {
 		return settings['default-agent-id'];
 	}
+}
+module.exports.databaseDir = function () {
+	return settings['database-dir'];
+}
+module.exports.getVersion = function() {
+	return settings['version'];
 }
