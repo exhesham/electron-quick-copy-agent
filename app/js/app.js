@@ -6,6 +6,7 @@ var fs = require('fs-extra');       //File System - for file manipulation
 var qr = require( path.resolve( __dirname,"js", "qrgenerator.js" ) );
 var utils = require( path.resolve( __dirname,"js", "utils.js" ) );
 var settings = require( path.resolve( __dirname,"js", "settings.js" ) );
+var user = require( path.resolve( __dirname,"js", "user.js" ) );
 const app = express();
 app.use(bodyParser.json());
 app.use(busboy());
@@ -22,21 +23,26 @@ app.get('/', function (req, res) {
  */
 app.post('/authorize/qrcode', function (req, res) {
 	console.debug('validating qrcode')
-
+	const err = {status: 'fail', error:'qr code is not correct or empty username!'};
 	var qrcode= req.body['qrcode'];
 	var username = req.body['username'];
+
 	console.debug('received qrcode='+qrcode +' and username='+username);
-	if(!username || !qr.validateQR(qrcode)){
-		console.error('validating qrcode: no username or qrcode that was received is not correct');
-		res.status(400).json({status: 'fail', error:'qr code is not correct or empty username!'});
-	}else{
-		var token = UsersAgent().storeTokenForUser(username, qrcode);
+	if(!username){
+		console.error('validating qrcode: no username ');
+		res.status(400).json(err);
+	}
+	qr.validateQR(qrcode).then(function (value) {
+		var token = user.UsersAgent().storeTokenForUser(username, qrcode);
 		/*
 		the scanned token by the user will not be the same as the returned one as the captured one may be stolen or captured by a second party
 		so in order for it not to be used by the attacker as impersonation, another random one will be created and posted back to the user.
 		 */
 		res.json({status: 'success', token:token, agent:settings.getAgentID()});
-	}
+	}).catch(function (reason) {
+		console.error('validating qrcode: qrcode that was received is not correct');
+		res.status(400).json(err);
+	})
 });
 /***
  * Expecting params:

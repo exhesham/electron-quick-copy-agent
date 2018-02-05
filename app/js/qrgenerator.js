@@ -32,3 +32,4 @@ function validateQR(qrcode) {
 	return new database.Database('qrs').findRecord('token', qrcode);
 }
 exports.generate = generate;
+exports.validateQR = validateQR;

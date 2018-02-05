@@ -9,13 +9,26 @@ function Database(dbName){
 	// initialize
 
 	this.dbName = dbName;
+	var filename = databaseNameToFilename(this.dbName);
+	if (!fs.existsSync(filename)) {
+		// create the container
+		console.debug('creating database file: '+ filename)
+		try{
+			fs.openSync(filename,'w+');
+		}catch (e){
+			console.error("Cannot write file ", e);
+		}
+		console.debug('done creating database file: '+ filename)
+	}
 	function databaseNameToFilename(dbname) {
 		return path.join(settings.databaseDir(),'__' + dbname + '.agent.db');
 	}
 
 	this.storeRecord = function(newRecord){
-		var filename = databaseNameToFilename(dbName);
-		fs.appendFileSync(filename,JSON.stringify(newRecord));
+
+		var filename = databaseNameToFilename(this.dbName);
+		console.debug('storeRecord: database file: '+ filename)
+		fs.appendFileSync(filename,JSON.stringify(newRecord)+'\n');
 	}
 	/**
 	 * this is an async method that will go over the lines in the file and try to parse them as json. if succeeded
@@ -25,14 +38,15 @@ function Database(dbName){
 	 * @param cb callback that will be called after finding the line - the cb will receive the json as parameter
 	 */
 	this.findRecord = function(key,val){
+		console.debug('called findRecord');
 		return new Promise(function(resolve, reject) {
-			if(!cb || !val || !key){
+			if(!val || !key){
 				console.error('findRecord: one of the input params is undefined.')
 				reject('findRecord: one of the input params is undefined.');
 				return;
 			}
 			var lineReader = readLine.createInterface({
-				input: fs.createReadStream(databaseNameToFilename(this.dbName))
+				input: fs.createReadStream(filename)
 			});
 
 			lineReader.on('line', function (line) {
@@ -52,7 +66,7 @@ function Database(dbName){
 }
 
 function getUserDBName(name) {
-	return 'user_' + utils.Base64Encode(name).replace('=','');
+	return 'user_' + utils.Base64Encode(name).replace(/=/g,'');
 }
 
 exports.Database = Database;

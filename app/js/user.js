@@ -1,5 +1,6 @@
-var db = require('database');
-var utils = require('utils');
+const db = require( path.resolve( __dirname, "database.js" ));
+const utils = require( path.resolve( __dirname,"utils.js" ) );
+const settings = require( path.resolve( __dirname,"settings.js" ) );
 
 function UsersAgent() {
 	return {
@@ -27,7 +28,7 @@ function UsersAgent() {
 		var userDbName = db.getUserDBName(user);
 		// generate the new token
 		var newToken = utils.generateToken();
-		new db.Database(userDbName).storeRecord({'user':user,'original-token': token, 'token':newToken, 'version': utils.getVersion()});
+		new db.Database(userDbName).storeRecord({'user':user,'original-token': token, 'token':newToken, 'version': settings.getVersion()});
 		return newToken;
 	};
 }
@@ -43,3 +44,6 @@ function User(username){
 
 	};
 }
+
+exports.UsersAgent = UsersAgent;
+exports.User = User;
