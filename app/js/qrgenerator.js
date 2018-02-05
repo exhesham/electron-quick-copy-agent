@@ -1,14 +1,34 @@
 // index.js -> bundle.js
-var QRCode = require('qrcode');
-var path = require('path');
-var utils = require( path.resolve( __dirname,"js", "utils.js" ) );
+const QRCode = require('qrcode');
+const database = require( path.resolve( __dirname, "database.js" ));
+const utils = require( path.resolve( __dirname,"utils.js" ) );
+
 function generate() {
 	var token = utils.generateToken();
-	var canvas = document.getElementById('qrcodec')
+	var canvas = document.getElementById('qrcodec');
+	if(!canvas){
+		console.error('canvas is not initialized yet!!');
+		return;
+	}
+
 	QRCode.toCanvas(canvas, token, function (error) {
-		if (error) console.error(error)
+		if (error) console.error(error);
+		// store the qrcode for generated qr codes table
+		new database.Database('qrs').storeRecord(generateRecordForDB(token));
 		console.log('success!');
 	});
 }
+function generateRecordForDB(token){
+	return {token: token};
+}
 
-generate();
+/**
+ *
+ * @param qrcode
+ * @returns {Promise}
+ */
+function validateQR(qrcode) {
+	console.debug('validateQR: '+ qrcode)
+	return new database.Database('qrs').findRecord('token', qrcode);
+}
+exports.generate = generate;

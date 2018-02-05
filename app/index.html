@@ -35,12 +35,22 @@
 
 
 </body>
+
+
 <script>
+
 	w3.includeHTML();
 	$(document).ready(function(){
-		// $("#qrcodeCanvas").resizable();
+		// $.getScript("js/database.js", function () {
+		// 	$.getScript("js/qrgenerator.js", function () {
+		// 		generate();
+		// 	});
+		// });
+		console.log('electorn is calling generate...')
+		const qrgen = require( path.resolve( __dirname,"js", "qrgenerator.js" ) );
+		qrgen.generate();
 	});
 
 </script>
-<script src="js/qrgenerator.js"></script>
+
 </html>

@@ -1,10 +1,13 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 var busboy = require('connect-busboy'); //middleware for form/file upload
 var path = require('path');     //used for file path
 var fs = require('fs-extra');       //File System - for file manipulation
+var qr = require( path.resolve( __dirname,"js", "qrgenerator.js" ) );
 var utils = require( path.resolve( __dirname,"js", "utils.js" ) );
 var settings = require( path.resolve( __dirname,"js", "settings.js" ) );
-const app = express()
+const app = express();
+app.use(bodyParser.json());
 app.use(busboy());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -18,17 +21,21 @@ app.get('/', function (req, res) {
  * @qrcode
  */
 app.post('/authorize/qrcode', function (req, res) {
-	var qrcode= req.param('qrcode');
-	var username = req.param('username');
-	if(!username || !utils.isQrCodeCorrect(qrcode)){
-		res.send({status: 'fail', msg:'qr code is not correct or empty username!'});
+	console.debug('validating qrcode')
+
+	var qrcode= req.body['qrcode'];
+	var username = req.body['username'];
+	console.debug('received qrcode='+qrcode +' and username='+username);
+	if(!username || !qr.validateQR(qrcode)){
+		console.error('validating qrcode: no username or qrcode that was received is not correct');
+		res.status(400).json({status: 'fail', error:'qr code is not correct or empty username!'});
 	}else{
 		var token = UsersAgent().storeTokenForUser(username, qrcode);
 		/*
 		the scanned token by the user will not be the same as the returned one as the captured one may be stolen or captured by a second party
 		so in order for it not to be used by the attacker as impersonation, another random one will be created and posted back to the user.
 		 */
-		res.send({status: 'success', token:token, agent:settings.getAgentID()});
+		res.json({status: 'success', token:token, agent:settings.getAgentID()});
 	}
 });
 /***
@@ -48,7 +55,7 @@ app.post('/transfer/text', function (req, res) {
 	var text = req.param('text');
 	var metadata = utils.getMetadataForText(text, user);
 	user.commitTransferredText(metadata);
-	res.send({status: 'success'})
+	res.json({status: 'success'})
 });
 
 /**

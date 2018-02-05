@@ -2,11 +2,11 @@
 * Responsible for managing the app settings.
 * */
 var settings = {
-	'protocol':'https://',
+	'protocol':'http://',
 	'folder':'./',
 	'version':'v1.8.2.1',   // 1.8 is the year 2 is the month and 1 is the serial num
 	'port': 3000,
-	'token-length': 32,
+	'token-length': 10,
 	'database-dir': './',
 	'default-agent-id': 'exhesham.com'
 }
