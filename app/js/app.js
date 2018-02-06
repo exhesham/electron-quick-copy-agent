@@ -3,10 +3,10 @@ const bodyParser = require('body-parser');
 var busboy = require('connect-busboy'); //middleware for form/file upload
 var path = require('path');     //used for file path
 var fs = require('fs-extra');       //File System - for file manipulation
-var qr = require( path.resolve( __dirname,"js", "qrgenerator.js" ) );
-var utils = require( path.resolve( __dirname,"js", "utils.js" ) );
-var settings = require( path.resolve( __dirname,"js", "settings.js" ) );
-var user = require( path.resolve( __dirname,"js", "user.js" ) );
+var qr = require( path.resolve( __dirname, "qrgenerator.js" ) );
+var utils = require( path.resolve( __dirname, "utils.js" ) );
+var settings = require( path.resolve( __dirname, "settings.js" ) );
+var user = require( path.resolve( __dirname, "user.js" ) );
 const app = express();
 app.use(bodyParser.json());
 app.use(busboy());
@@ -97,3 +97,4 @@ app.post('/transfer/file', function (req, res) {
 });
 
 app.listen(settings.getPort(), '0.0.0.0');
+module.exports = app;

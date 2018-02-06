@@ -1,5 +1,6 @@
 // index.js -> bundle.js
 const QRCode = require('qrcode');
+const path = require('path');
 const database = require( path.resolve( __dirname, "database.js" ));
 const utils = require( path.resolve( __dirname,"utils.js" ) );
 

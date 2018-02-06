@@ -2,6 +2,7 @@
 * Responsible for managing the database settings.
 * */
 var fs = require("fs");
+const path = require('path');
 var utils = require( path.resolve( __dirname, "utils.js" ) );
 var settings = require( path.resolve( __dirname,"settings.js" ) );
 var readLine = require('readline');

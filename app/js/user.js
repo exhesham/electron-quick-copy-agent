@@ -1,3 +1,4 @@
+const path = require('path');
 const db = require( path.resolve( __dirname, "database.js" ));
 const utils = require( path.resolve( __dirname,"utils.js" ) );
 const settings = require( path.resolve( __dirname,"settings.js" ) );
