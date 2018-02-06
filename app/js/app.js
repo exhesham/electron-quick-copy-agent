@@ -3,10 +3,13 @@ const bodyParser = require('body-parser');
 var busboy = require('connect-busboy'); //middleware for form/file upload
 var path = require('path');     //used for file path
 var fs = require('fs-extra');       //File System - for file manipulation
-var qr = require( path.resolve( __dirname, "qrgenerator.js" ) );
-var utils = require( path.resolve( __dirname, "utils.js" ) );
-var settings = require( path.resolve( __dirname, "settings.js" ) );
-var user = require( path.resolve( __dirname, "user.js" ) );
+
+var relativePath = path.resolve( __dirname, "js" );
+if(!fs.existsSync(relativePath)) relativePath = __dirname
+var qr = require( path.resolve( relativePath, "qrgenerator.js" ) );
+var utils = require( path.resolve( relativePath, "utils.js" ) );
+var settings = require( path.resolve( relativePath, "settings.js" ) );
+var user = require( path.resolve( relativePath, "user.js" ) );
 const app = express();
 app.use(bodyParser.json());
 app.use(busboy());
@@ -22,7 +25,8 @@ app.get('/', function (req, res) {
  * @qrcode
  */
 app.post('/authorize/qrcode', function (req, res) {
-	console.debug('validating qrcode')
+	console.debug('validating qrcode');
+	res.setHeader('Content-Type', 'application/json');
 	const err = {status: 'fail', error:'qr code is not correct or empty username!'};
 	var qrcode= req.body['qrcode'];
 	var username = req.body['username'];
@@ -38,10 +42,12 @@ app.post('/authorize/qrcode', function (req, res) {
 		the scanned token by the user will not be the same as the returned one as the captured one may be stolen or captured by a second party
 		so in order for it not to be used by the attacker as impersonation, another random one will be created and posted back to the user.
 		 */
-		res.json({status: 'success', token:token, agent:settings.getAgentID()});
+		console.debug('return the response: ');
+		console.debug({'status': 'success', 'token':token, 'agent':settings.getAgentID()});
+		res.send(200, {'status': 'success', 'token':token, 'agent':settings.getAgentID()});
 	}).catch(function (reason) {
 		console.error('validating qrcode: qrcode that was received is not correct');
-		res.status(400).json(err);
+		res.send(400, err);
 	})
 });
 /***
