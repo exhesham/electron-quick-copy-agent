@@ -70,5 +70,10 @@ function getUserDBName(name) {
 	return 'user_' + utils.Base64Encode(name).replace(/=/g,'');
 }
 
+function getUserTextDBName(name) {
+	return 'user_texts_' + utils.Base64Encode(name).replace(/=/g,'');
+}
+
+
 exports.Database = Database;
 exports.getUserDBName = getUserDBName;

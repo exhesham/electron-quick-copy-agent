@@ -2,6 +2,7 @@
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <meta charset="UTF-8">
     <title>Quick Copy Agent</title>
     <!--include jquery-->
@@ -14,26 +15,31 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-
-
+    <!--dataTables-->
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.jqueryui.min.js"></script>
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <!--this script is needed in order to include other html files-->
     <script src="https://www.w3schools.com/lib/w3.js"></script>
-    <script src="js/app.js"></script>
 
+    <!--datatables-->
+
+    <script src="js/app.js"></script>
+    <script src="js/index.js"></script>
 
 </head>
 <div w3-include-html="header.html"></div>
 <body>
-
-    <div id="qrcodeCanvas">
-        <canvas id="qrcodec"></canvas>
+    <div id="homePage" class="page" >
+        <div id="qrcodeCanvas">
+            <canvas id="qrcodec"></canvas>
+        </div>
     </div>
-
-
+    <div id="textsPage" class="page hidden"  w3-include-html="texts.html"></div>
 </body>
 
 
@@ -49,6 +55,9 @@
 		console.log('electorn is calling generate...')
 		const qrgen = require( path.resolve( __dirname,"js", "qrgenerator.js" ) );
 		qrgen.generate();
+		// const index = require( path.resolve( __dirname,"js", "index.js" ) );
+		// index.main();
+		$('#example').DataTable();
 	});
 
 </script>

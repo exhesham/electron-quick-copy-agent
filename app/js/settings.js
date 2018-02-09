@@ -1,3 +1,4 @@
+var os = require("os");
 /*
 * Responsible for managing the app settings.
 * */
@@ -8,7 +9,7 @@ var settings = {
 	'port': 3000,
 	'token-length': 10,
 	'database-dir': './',
-	'default-agent-id': 'exhesham.com'
+	'default-agent-id': os.hostname()
 }
 
 module.exports.getPort = function () {

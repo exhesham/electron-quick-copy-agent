@@ -5,5 +5,16 @@
                 <img alt="Brand" src="images/logo.png" class="logo">
             </a>
         </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li id="home" class="tab active"><a href="#" onclick="highlight('home')">Home</a></li>
+                <li id="texts" class="tab "><a href="#" onclick="highlight('texts');initTextsTable();">Texts</a></li>
+                <li id="files" class="tab "><a href="#" onclick="highlight('files')">Files</a></li>
+                <li id="backups" class="tab "><a href="#" onclick="highlight('backups')">Backups</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li id="settings" class="tab "><a href="#" onclick="highlight('settings');">Settings</a></li>
+            </ul>
+        </div>
     </div>
 </nav>

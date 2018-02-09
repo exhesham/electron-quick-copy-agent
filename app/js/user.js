@@ -18,7 +18,7 @@ function UsersAgent() {
 		return false;
 	};
 	function getUserByToken(token){
-		return false;
+		return true;
 	};
 	/***
 	 * will store the token - and return a new generated one that the user will be identified with it.
@@ -27,7 +27,7 @@ function UsersAgent() {
 	 */
 	function storeTokenForUser(user,token){
 		var userDbName = db.getUserDBName(user);
-		// generate the new token
+		// generate the new token without the rest of the qr details. the mobile is going to use it for identification
 		var newToken = utils.generateToken();
 		new db.Database(userDbName).storeRecord({'user':user,'original-token': token, 'token':newToken, 'version': settings.getVersion()});
 		return newToken;
@@ -42,7 +42,8 @@ function User(username){
 
 	};
 	this.commitTransferredText = function(metdadata){
-
+		var userDbName = db.getUserTextDBName(user);
+		new db.Database(userDbName).storeRecord(metdadata);
 	};
 }
 

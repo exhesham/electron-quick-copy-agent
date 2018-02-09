@@ -43,18 +43,36 @@ function Base64Decode(str) {
 	return new (TextDecoder || TextDecoderLite)(encoding).decode(bytes);
 }
 /**
- * will generate a token with the data: port@32 letters hash
- * for example: 3000@
+ * will generate a token with the data: address@32 letters hash
+ * for example: address@2342432423sdsa
+ */
+function generateQR() {
+	return settings.getProtocol() +getIP() + ':' + settings.getPort() + '@' + generateToken()
+}
+/**
+ * will generate a token without the data: address@32 letters hash
+ * for example: sdfnsdk
  */
 function generateToken() {
-	return settings.getProtocol() +getIP() + ':' + settings.getPort() + '@' + randomStriing(settings.getTokenLength())
+	return randomStriing(settings.getTokenLength())
 }
-
 function getIP() {
 	return myip.getLocalIP4();
 }
+function getAddress() {
+	return  settings.getProtocol() +getIP() + ':' + settings.getPort();
+}
+
+
+function getMetadataForText(text, sender){
+	var date = new Date().getTime();
+	return {text: text, sender:sender, date: date};
+}
 exports.getMetadataForFile = getMetadataForFile;
+exports.generateQR = generateQR;
 exports.generateToken = generateToken;
 exports.Base64Decode = Base64Decode;
 exports.Base64Encode = Base64Encode;
 exports.getIP = getIP;
+exports.getAddress = getAddress;
+exports.getMetadataForText = getMetadataForText;

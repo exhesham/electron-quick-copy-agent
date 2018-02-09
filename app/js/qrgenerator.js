@@ -5,7 +5,7 @@ const database = require( path.resolve( __dirname, "database.js" ));
 const utils = require( path.resolve( __dirname,"utils.js" ) );
 
 function generate() {
-	var token = utils.generateToken();
+	var token = utils.generateQR();
 	var canvas = document.getElementById('qrcodec');
 	if(!canvas){
 		console.error('canvas is not initialized yet!!');
