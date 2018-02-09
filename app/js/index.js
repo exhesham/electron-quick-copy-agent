@@ -1,3 +1,6 @@
+if(!path)
+var  path = require('path');
+var database = require( path.resolve( __dirname,"js", "database.js" ));
 function highlight(tabId) {
 	var tab = document.getElementById(tabId);
 	if(!tab) return;
@@ -24,29 +27,50 @@ function highlight(tabId) {
 }
 
 var allTexts = [];
+var textsTable = null;
 function loadTexts(){
-
+	var textsDbName = db.getTextsDBName();
+	return new db.Database(textsDbName).getRecords();
 }
 function initTextsTable(){
-	// allTexts = loadTexts();
-	allTexts = [
-		['a','b','c']
-	];
 
-	$('#textsTable').DataTable( {
-		data: allTexts,
-		columns: [
-			{ title: "Source" },
-			{ title: "Date" },
-			{ title: "Text" }
-		]
-	} );
+	loadTexts().then(function (allRecords) {
+		allTexts = [];
+		for(var i in allRecords){
+			console.log('updating record index ' + i)
+			var rec = allRecords[i];
+			var parsed = new db.TextsAttrs(rec);
+			var dtRec = [];
+			dtRec.push(parsed.getSourceDevice());
+			dtRec.push(parsed.getDate());
+			dtRec.push(parsed.getText());
+			allTexts.push(dtRec);
+
+		}
+		if(textsTable != null){
+			textsTable.data(allTexts)
+		}else{
+			textsTable = $('#textsTable').DataTable( {
+				data: allTexts,
+				columns: [
+					{ title: "Source" },
+					{ title: "Date" },
+					{ title: "Text" }
+				]
+			} );
+		}
+
+	}).catch(function (err) {
+		console.error(err);
+	});
+
 }
 
 
 function main(){
-	initTextsTable();
+
 }
 
 // exports.main = main;
+// exports.highlight = highlight;
 main();

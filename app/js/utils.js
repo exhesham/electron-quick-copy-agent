@@ -64,10 +64,7 @@ function getAddress() {
 }
 
 
-function getMetadataForText(text, sender){
-	var date = new Date().getTime();
-	return {text: text, sender:sender, date: date};
-}
+
 exports.getMetadataForFile = getMetadataForFile;
 exports.generateQR = generateQR;
 exports.generateToken = generateToken;
@@ -75,4 +72,4 @@ exports.Base64Decode = Base64Decode;
 exports.Base64Encode = Base64Encode;
 exports.getIP = getIP;
 exports.getAddress = getAddress;
-exports.getMetadataForText = getMetadataForText;
+
