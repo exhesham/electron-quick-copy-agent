@@ -1,8 +1,15 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
+var AutoLaunch = require('auto-launch');
 
+// auto launch
+var dataAgent = new AutoLaunch({
+	name: 'Quick Agent',
+	// path: '/Applications/Minecraft.app',
+});
 
+dataAgent.enable();
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win

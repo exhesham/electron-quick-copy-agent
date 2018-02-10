@@ -43,7 +43,10 @@ function Database(dbName){
 					return;
 				}
 			});
-			resolve(res);
+			lineReader.on('close', function(){
+				resolve(res);
+			});
+
 		});
 
 	}

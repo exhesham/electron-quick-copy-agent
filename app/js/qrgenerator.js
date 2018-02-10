@@ -12,7 +12,7 @@ function generate() {
 		return;
 	}
 
-	QRCode.toCanvas(canvas, token, function (error) {
+	QRCode.toCanvas(canvas, token,{scale: 9}, function (error) {
 		if (error) console.error(error);
 		// store the qrcode for generated qr codes table
 		new database.Database('qrs').storeRecord(generateRecordForDB(token));

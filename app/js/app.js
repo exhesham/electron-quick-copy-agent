@@ -78,9 +78,8 @@ app.post('/transfer/text', function (req, res) {
 		newRecord.setSourceDevice(sender.record.getMobile());
 		newRecord.setDate();
 		newRecord.setUser(sender.record.getUser());
-
-		uiText.addNewMessageDomToUI(newRecord.getRecord());
 		sender.commitTransferredText(newRecord.getRecord());
+		uiText.addNewMessageDomToUI(newRecord.getRecord());
 	});
 });
 
