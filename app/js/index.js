@@ -32,51 +32,6 @@ function highlight(tabId) {
 	page.classList.remove('hidden');    // make clicked active
 }
 
-
-var textsTable = null;
-
-function loadTexts() {
-	var textsDbName = db.getTextsDBName();
-	return new db.Database(textsDbName).getRecords();
-}
-
-function initTextsTable() {
-	function parseData(allRecords) {
-		console.debug('parseData called with ' + allRecords)
-		var allTexts = [];
-		allRecords.forEach(function (rec) {
-			console.log('updating record index ' + i)
-			var parsed = new db.TextsAttrs(rec);
-			var dtRec = [];
-			dtRec.push(parsed.getSourceDevice());
-			dtRec.push(parsed.getText());
-			dtRec.push(parsed.getDate());
-			allTexts.push(dtRec);
-		});
-		return allTexts;
-	}
-
-	loadTexts().then(function (allRecords) {
-
-		if (textsTable != null) {
-			textsTable.data(parseData(allRecords))
-		} else {
-			textsTable = $('#textsTable').DataTable({
-				data: parseData(allRecords),
-				columns: [
-					{title: "Source"},
-					{title: "Text"},
-					{title: "Date"}
-				]
-			});
-		}
-
-	}).catch(function (err) {
-		console.error(err);
-	});
-
-}
-
 function loadCharts() {
 	google.charts.load('current', {'packages': ['gauge']});
 	google.charts.setOnLoadCallback(drawChart);
@@ -133,35 +88,7 @@ function loadCharts() {
 
 function main() {
 	// tray icon tutorial: https://www.tutorialspoint.com/electron/electron_system_tray.htm
-	const {remote} = require('electron')
-	const {Tray, Menu} = remote
-	const path = require('path')
 
-	let trayIcon = new Tray(path.join('images', 'logo.png'))
-
-	const trayMenuTemplate = [
-		{
-			label: 'Empty Application',
-			enabled: false
-		},
-
-		{
-			label: 'Settings',
-			click: function () {
-				console.log("Clicked on settings")
-			}
-		},
-
-		{
-			label: 'Help',
-			click: function () {
-				console.log("Clicked on Help")
-			}
-		}
-	]
-
-	let trayMenu = Menu.buildFromTemplate(trayMenuTemplate)
-	trayIcon.setContextMenu(trayMenu)
 }
 
 // exports.main = main;

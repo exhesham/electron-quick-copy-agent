@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <meta charset="UTF-8">
     <title>Quick Copy Agent</title>
     <!--include jquery-->
     <script src="external/jquery.min.js"></script>
@@ -36,10 +36,12 @@
 
     <script src="js/app.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/ui-messages.js"></script>
 
 </head>
 <div w3-include-html="header.html"></div>
 <body>
+
 <div id="homePage" class="page">
     <div class="page-header">
         <h1>Quick Data Agent
@@ -61,8 +63,12 @@
                 <div class="col-md-8">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <span class="badge">0</span>
+                            <span class="badge" id="total-received-texts">0</span>
                             Total Received Texts
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge">0</span>
+                            Total Sent Files
                         </li>
                         <li class="list-group-item">
                             <span class="badge">0</span>
@@ -83,6 +89,41 @@
 
 </div>
 <div id="textsPage" class="page hidden" w3-include-html="texts.html"></div>
+<script type = "text/javascript">
+	const {remote} = require('electron')
+	const {Tray, Menu} = remote
+	var path = require('path')
+	var full = location.pathname;
+	var parentPath = full.substr(0,full.lastIndexOf("/") + 1);
+	var logoPath = path.join(parentPath, 'images','tray_logo48x48.png');
+	logoPath = logoPath.replace(/^\\/,"");   // for windows - remove first occurance
+	path.sep = path.sep.replace('\\','\\\\');   // for windows
+	let trayIcon = new Tray(logoPath)
+
+	const trayMenuTemplate = [
+		{
+			label: 'Empty Application',
+			enabled: false
+		},
+
+		{
+			label: 'Settings',
+			click: function () {
+				console.log("Clicked on settings")
+			}
+		},
+
+		{
+			label: 'Help',
+			click: function () {
+				console.log("Clicked on Help")
+			}
+		}
+	]
+
+	let trayMenu = Menu.buildFromTemplate(trayMenuTemplate)
+	trayIcon.setContextMenu(trayMenu)
+</script>
 </body>
 
 
