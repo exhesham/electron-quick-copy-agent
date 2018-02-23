@@ -9,6 +9,8 @@
     "express-bandwidth": "0.0.1",
     "express-transform": "^1.0.1",
     "fs-extra": "^5.0.0",
+    "google-auth-library": "^0.12.0",
+    "googleapis": "^26.0.1",
     "http": "0.0.0",
     "node-smb-server": "^0.10.33",
     "pidusage": "^1.2.0",

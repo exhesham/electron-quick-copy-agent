@@ -199,7 +199,7 @@ function copyToClipboard(elem) {
 	return succeed;
 }
 function displayData(data) {
-	var text = data.children[0].innerText;
+	var text = data.innerText;
 	createModal(text,
 		{id:'copy-text-dialog',
 			buttons:[
