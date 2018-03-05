@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-var busboy = require('connect-busboy'); //middleware for form/file upload
 var path = require('path');     //used for file path
 var fs = require('fs-extra');       //File System - for file manipulation
 
@@ -14,7 +13,6 @@ var db = require( path.resolve( relativePath, "database.js" ) );
 var uiText = require( path.resolve( relativePath, "ui-messages.js" ) );
 const app = express();
 app.use(bodyParser.json());
-app.use(busboy());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {

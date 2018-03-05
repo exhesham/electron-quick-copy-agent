@@ -46,7 +46,8 @@ function initTextsTable() {
 
 	loadTexts().then(function (allRecords) {
 
-		if (textsTable != null) {
+		if ( $.fn.dataTable.isDataTable( '#textsTable' )) {
+			textsTable = $('#textsTable').DataTable();
 			textsTable.rows.add(parseData(allRecords));
 		} else {
 			textsTable = $('#textsTable').DataTable({
